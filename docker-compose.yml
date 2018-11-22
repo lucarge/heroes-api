@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  api:
+    build: .
+    command: cargo watch -w ./src -x run
+    container_name: rusty_api
+    environment:
+      DATABASE_URL: mysql://lucarge:hypersecret@database/heroes
+    links:
+      - database
+    ports:
+      - "8080:3000"
+    volumes:
+      - .:/usr/app
+
+  database:
+    container_name: rusty_database
+    environment:
+      MYSQL_DATABASE: heroes
+      MYSQL_USER: lucarge
+      MYSQL_PASSWORD: hypersecret
+      MYSQL_ROOT_PASSWORD: supersecret
+    image: "mysql:8"
+    restart: always
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+volumes:
+  mysqldata:
