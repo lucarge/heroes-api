@@ -13,6 +13,7 @@ services:
       - "8080:3000"
     volumes:
       - .:/usr/app
+      - cargocache:/usr/local/cargo
 
   database:
     container_name: rusty_database
@@ -21,10 +22,11 @@ services:
       MYSQL_USER: lucarge
       MYSQL_PASSWORD: hypersecret
       MYSQL_ROOT_PASSWORD: supersecret
-    image: "mysql:8"
+    image: "mysql:5.7"
     restart: always
     volumes:
       - mysqldata:/var/lib/mysql
 
 volumes:
+  cargocache:
   mysqldata:
