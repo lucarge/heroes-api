@@ -1,13 +1,16 @@
 #![feature(plugin)]
 #![plugin(rocket_codegen)]
 
+#[macro_use] extern crate diesel;
 extern crate rocket;
 #[macro_use] extern crate rocket_contrib;
 #[macro_use] extern crate serde_derive;
 
 use rocket_contrib::{Json, Value};
 
+mod db;
 mod hero;
+mod schema;
 use hero::{Hero};
 
 #[delete("/<id>")]
@@ -34,6 +37,7 @@ fn update(id: i32, hero: Json<Hero>) -> Json<Hero> {
 
 fn main() {
     rocket::ignite()
+        .manage(db::connect())
         .mount("/hero", routes![create, update, delete])
         .mount("/heroes", routes![read])
         .launch();

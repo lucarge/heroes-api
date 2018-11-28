@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["lucarge <luca.argenziano@icloud.com>"]
 
 [dependencies]
+diesel = { version = "1.3.3", features = ["mysql", "r2d2"] }
 rocket = "0.3.6"
 rocket_codegen = "0.3.6"
 serde = "1.0"
